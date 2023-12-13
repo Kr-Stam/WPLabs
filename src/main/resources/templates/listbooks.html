@@ -16,7 +16,7 @@
     <!-- Display radio buttons for each book,
             the value should be the isbn
             and the displayed text should be Title: <bookTitle>, Genre:<genre>, Year: <year> -->
-    <form class="row">
+    <form class="row" method="get">
         <div class="col-3">
         <input type="text" class="form-control ms-1" name="searchStr" th:value="${searchStr}">
         </div>
@@ -24,6 +24,7 @@
         <input type="submit" class="form-control" value="Search" formaction="/listBooks">
         </div>
     </form>
+
 
     <div th:each="book: ${books}">
     <div class="row m-1">
@@ -42,11 +43,17 @@
                 <i class="fa fa-trash">Edit</i>
             </a>
         </th:block>
+            <th:block>
+                <a th:href="@{'/books/add-author/{id}' (id=${book.getId()})}"
+                   class="btn btn-outline-secondary edit-product">
+                    <i class="fa fa-trash">Add Author</i>
+                </a>
+            </th:block>
         </div>
 
     </div>
     </div>
-    <input type='submit' value='Submit' formaction="/author">
+<!--    <input type='submit' value='Submit' formaction="/author">-->
 <!--    <input type='submit' value='Submit'>-->
     </form>
 </main>
