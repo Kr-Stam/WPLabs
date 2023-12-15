@@ -3,14 +3,20 @@ package mk.finki.ukim.mk.lab.web.controller;
 import mk.finki.ukim.mk.lab.model.Author;
 import mk.finki.ukim.mk.lab.model.Book;
 import mk.finki.ukim.mk.lab.model.BookStore;
+import mk.finki.ukim.mk.lab.model.Review;
+import mk.finki.ukim.mk.lab.services.AuthorService;
 import mk.finki.ukim.mk.lab.services.BookService;
 import mk.finki.ukim.mk.lab.services.BookStoreService;
+import mk.finki.ukim.mk.lab.services.impl.AuthorServiceImpl;
 import mk.finki.ukim.mk.lab.services.impl.BookServiceImpl;
 import mk.finki.ukim.mk.lab.services.impl.BookStoreServiceImpl;
+import mk.finki.ukim.mk.lab.services.impl.ReviewServiceImpl;
+import mk.finki.ukim.mk.lab.util.DataHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -18,10 +24,22 @@ public class BookController {
 
     private BookService bookService;
     private BookStoreService bookStoreService;
+    private AuthorService authorService;
+    private ReviewServiceImpl reviewService;
+    private DataHolder dataHolder;
 
-    public BookController(BookServiceImpl bookService, BookStoreServiceImpl bookStoreService) {
+    public BookController(
+            BookServiceImpl bookService,
+            BookStoreServiceImpl bookStoreService,
+            AuthorServiceImpl authorService,
+            ReviewServiceImpl reviewService,
+            DataHolder dataHolder) {
         this.bookService = bookService;
         this.bookStoreService = bookStoreService;
+        this.authorService = authorService;
+        this.reviewService = reviewService;
+
+        this.dataHolder = dataHolder;
     }
 
     @GetMapping("/books")
@@ -45,6 +63,10 @@ public class BookController {
             model.addAttribute("book", book);
         }
 
+        model.addAttribute("showCommentForm", false);
+        model.addAttribute("tmpReview", new Review());
+
+        model.addAttribute("reviews", reviewService.getReviewsByBook(id));
         return "bookdetails";
     }
 
@@ -101,5 +123,34 @@ public class BookController {
         bookService.deleteById(id);
 
         return "redirect:/books";
+    }
+    @GetMapping("books/init")
+    public String initBooks(Model model){
+        dataHolder.bookStores.forEach(bookStore -> bookStoreService.saveBookStore(bookStore));
+        dataHolder.authors.forEach(author -> authorService.saveAuthor(author));
+        dataHolder.books.forEach(book -> bookService.saveBook(book));
+        System.out.println("Stiga");
+
+        return "redirect:/books";
+    }
+
+    @GetMapping("")
+    public String redirect(Model model){
+        return "redirect:/books";
+    }
+
+    @PostMapping("books/{id}/add-review")
+    public String addReview(
+            @PathVariable long id,
+            @ModelAttribute Review review){
+
+        review.setId(0L);
+        review.setTimestamp(LocalDateTime.now());
+
+        review.setBook(bookService.getBookById(id));
+        reviewService.saveReview(review);
+
+
+        return "redirect:/books/" + id;
     }
 }

@@ -2,6 +2,7 @@ package mk.finki.ukim.mk.lab.services;
 
 import mk.finki.ukim.mk.lab.model.Author;
 import mk.finki.ukim.mk.lab.model.Book;
+import mk.finki.ukim.mk.lab.model.Review;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,4 +20,8 @@ public interface BookService {
     void deleteById(long id);
 
     void editBook(long id, Book book);
+
+    void editBook(Book book);
+
+//    void addReviewToBook(long id, Review review);
 }

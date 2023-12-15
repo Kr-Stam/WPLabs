@@ -1,4 +1,4 @@
-package mk.finki.ukim.mk.lab.repository;
+package mk.finki.ukim.mk.lab.repository.inmemory;
 
 import mk.finki.ukim.mk.lab.util.DataHolder;
 import mk.finki.ukim.mk.lab.model.Author;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class InMemoryAuthorRepository implements IAuthorRepository{
+public class InMemoryAuthorRepository implements IAuthorRepository {
 
     private DataHolder dataHolder;
 
@@ -28,6 +28,6 @@ public class InMemoryAuthorRepository implements IAuthorRepository{
 
     @Override
     public Optional<Author> findByName(String name) {
-        return dataHolder.authors.stream().filter(x -> x.getName().equals(name)).findFirst();
+        return dataHolder.authors.stream().filter(x -> x.getAuthorFullName().toString().contains(name)).findFirst();
     }
 }

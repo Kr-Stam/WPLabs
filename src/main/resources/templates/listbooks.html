@@ -12,6 +12,7 @@
     </div>
 </header>
 <main class="container">
+    <a th:if="${books==null || books.isEmpty()}" href="books/init"><button class="btn btn-lg btn-secondary">Initialize Books</button></a>
     <h2>Choose book:</h2>
     <!-- Display radio buttons for each book,
             the value should be the isbn
@@ -29,13 +30,12 @@
     <div th:each="book: ${books}">
     <div class="row m-1">
     <div class="col-8">
-    <input type="radio" class="form-check-input" th:name="bookIsbn" th:value="${book.getIsbn()}"> <span th:text="${book.toString()}" /> <br/>
+    <span th:text="${book.toString()}" /> <br/>
     </div>
         <form class="col-2" th:action="@{'/books/delete/{id}' (id=${book.getId()})}"
               method="get">
             <button type="submit" class="btn btn-outline-danger">DELETE</button>
         </form>
-<!--        <button type="button" th:href="@{'/books/delete/{id}' (id=${book.getId()})}" class="btn btn-outline-secondary col-2">EDIT</button>-->
         <div class="col-2">
         <th:block>
             <a th:href="@{'/books/edit/{id}' (id=${book.getId()})}"

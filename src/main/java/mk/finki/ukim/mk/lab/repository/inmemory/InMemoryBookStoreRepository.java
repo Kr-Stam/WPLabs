@@ -1,4 +1,4 @@
-package mk.finki.ukim.mk.lab.repository;
+package mk.finki.ukim.mk.lab.repository.inmemory;
 
 import mk.finki.ukim.mk.lab.model.BookStore;
 import mk.finki.ukim.mk.lab.util.DataHolder;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class InMemoryBookStoreRepository implements IBookStoreRepository{
+public class InMemoryBookStoreRepository implements IBookStoreRepository {
 
     private DataHolder dataHolder;
 

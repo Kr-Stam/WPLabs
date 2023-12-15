@@ -7,7 +7,10 @@ import java.util.List;
 
 @Service
 public interface BookStoreService {
+
     public List<BookStore> findAll();
 
     BookStore findById(long id);
+
+    void saveBookStore(BookStore bookStore);
 }

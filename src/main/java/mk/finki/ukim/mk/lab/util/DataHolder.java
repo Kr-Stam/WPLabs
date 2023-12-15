@@ -6,6 +6,7 @@ import mk.finki.ukim.mk.lab.model.Book;
 import mk.finki.ukim.mk.lab.model.BookStore;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +21,15 @@ public class DataHolder {
     private void init() {
         authors = new ArrayList<>();
 
-        authors.add(new Author(1L, "John", "Smith", "Biography 1"));
-        authors.add(new Author(2L, "John", "Doe", "Biography 2"));
-        authors.add(new Author(3L, "JRR", "Tolkien", "Biography 3"));
-        authors.add(new Author(4L, "Gene", "Wolfe", "Biography 4"));
-        authors.add(new Author(5L, "Arthur", "C. Clarke", "Biography 6"));
+        authors.add(new Author(1L, "John", "Smith", "Biography 1", LocalDate.now(), new ArrayList<>()));
+        authors.add(new Author(2L, "John", "Doe", "Biography 2", LocalDate.now(), new ArrayList<>()));
+        authors.add(new Author(3L, "John", "Doe", "Biography 2", LocalDate.now(), new ArrayList<>()));
+        authors.add(new Author(4L, "JRR", "Tolkien", "Biography 3", LocalDate.now(), new ArrayList<>()));
+        authors.add(new Author(5L, "Gene", "Wolfe", "Biography 4", LocalDate.now(), new ArrayList<>()));
+        authors.add(new Author(6L, "Arthur", "C. Clarke", "Biography 5", LocalDate.now(), new ArrayList<>()));
+        authors.add(new Author(7L, "JRR", "Tolkien", "Biography 3", LocalDate.now(), new ArrayList<>()));
+        authors.add(new Author(8L, "Gene", "Wolfe", "Biography 4", LocalDate.now(), new ArrayList<>()));
+        authors.add(new Author(9L, "Arthur", "C. Clarke", "Biography 6", LocalDate.now(), new ArrayList<>()));
 
         bookStores = new ArrayList<>();
         bookStores.add(new BookStore(1L, "Knizhara1", "Skopje", "Adresa 1"));

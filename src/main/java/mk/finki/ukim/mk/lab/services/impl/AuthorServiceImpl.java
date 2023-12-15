@@ -1,9 +1,7 @@
 package mk.finki.ukim.mk.lab.services.impl;
 
 import mk.finki.ukim.mk.lab.model.Author;
-import mk.finki.ukim.mk.lab.repository.IAuthorRepository;
-import mk.finki.ukim.mk.lab.repository.InMemoryAuthorRepository;
-import mk.finki.ukim.mk.lab.repository.InMemoryBookRepository;
+import mk.finki.ukim.mk.lab.repository.jpa.AuthorRepository;
 import mk.finki.ukim.mk.lab.services.AuthorService;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +10,9 @@ import java.util.List;
 @Service
 public class AuthorServiceImpl implements AuthorService {
 
-    private IAuthorRepository authorRepository;
+    private final AuthorRepository authorRepository;
 
-    public AuthorServiceImpl(InMemoryAuthorRepository authorRepository) {
+    public AuthorServiceImpl(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
 
@@ -27,4 +25,15 @@ public class AuthorServiceImpl implements AuthorService {
     public Author findById(Long id) {
         return authorRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public void deleteById(long id){
+        authorRepository.deleteById(id);
+    }
+
+    @Override
+    public void saveAuthor(Author author) {
+        authorRepository.save(author);
+    }
+
 }
